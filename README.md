@@ -129,3 +129,24 @@ List Comprehension is a concise and efficient way to create list in Python using
     >>> new_dict
     {'green': ['green', 'red', 'masala'], 'red': ['green', 'red', 'masala'], 'masala': ['green', 'red', 'masala']}
 ```
+
+## Tuple in Python
+
+#### Immutable but supports all other operations like list()
+```
+    >>> t=(1,2,3,1,2,3,1,1)
+    >>> t.count(1)
+    4
+```
+# Lesson 1:
+### Optimization at level Python < C < OS < CPU
+Optimization happens at multiple levels:
+
+Python < C < OS < CPU
+
+    - Python: Interpreted, high-level, more overhead.
+    - C: Lower-level, compiled, optimized memory handling.
+    - OS: Manages processes, scheduling, memory paging.
+    - CPU: Hardware-level optimizations, caching, parallel execution.
+
+Each layer adds efficiency, with CPU-level optimizations being the fastest! 🚀
