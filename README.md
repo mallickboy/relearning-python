@@ -150,3 +150,55 @@ Python < C < OS < CPU
     - CPU: Hardware-level optimizations, caching, parallel execution.
 
 Each layer adds efficiency, with CPU-level optimizations being the fastest! 🚀
+
+## Behaind the scene of Loops in Python
+
+#### Iterator and Iterable
+    - Calling iter(arr) returns an iterator object for the iterable ( x= iter([1,2,3,4]) & got x= <list_iterator object at 0x00000250EB95DCF0> ).
+    - Iterator Object's memory reference stays the same between iterations.
+    - Calling x.__next__() returns the current value and then __next__() moves to the next item ( returns 1 and moves to next element 2).
+    - What changes: The internal position of the iterator (x.__next__() moves to the next item like from 1 to 2).
+    - What does not change: The memory reference of the iterator object ,even after x.__next__() is called. (Remains x= <list_iterator object at 0x00000250EB95DCF0>).
+    - StopIteration: When the iterator is exhausted, x.__next__() raises the StopIteration exception to signal the end of iteration and the for loop stops.
+```
+    >>> arr=[1,2,3,4]
+    >>> x=iter(arr)
+    >>> x
+    <list_iterator object at 0x00000250EB95DCF0>
+    >>> x.__next__()
+    1
+    >>> x
+    <list_iterator object at 0x00000250EB95DCF0>
+    >>> x.__next__()
+    2
+    >>> x.__next__()
+    3
+    >>> x.__next__()
+    4
+    >>> x.__next__()
+    Traceback (most recent call last):
+    File "<python-input-17>", line 1, in <module>
+        x.__next__()
+        ~~~~~~~~~~^^
+    StopIteration
+    >>>
+```
+#### Reference of file is by default it's Iterable Object
+#### Reference of List/ Dictionary is not it's Iterable Object by default 
+```
+    >>> f= open('chai.py')
+    >>> f is iter(f)
+    True                    # Reference of Iterable of file object
+    >>> f.__iter__() is iter(f)
+    True                    
+    >>> arr=[1,2,3]
+    >>> iter(arr) is arr
+    False                   # Reference of actual list object
+    >>> next(arr)
+    TypeError: 'list' object is not an iterator
+    >>> z= iter(arr)        # Creating the Iterable of list object
+    >>> z is iter(arr)
+    True
+    >>> next(z)
+    1
+```
