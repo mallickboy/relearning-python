@@ -14,7 +14,7 @@ After 3 years of experience in python revisioning core fundamentals of Python
 ## List in Python
 
 #### List Slicing
-```
+```bash
     >>> nums = [1, 2, 3, 4]
     >>> nums = [0, 1, 2, 3, 4]
     >>> nums[1:1]
@@ -30,7 +30,7 @@ After 3 years of experience in python revisioning core fundamentals of Python
 ```
 
 #### Insert, remove, pop in List
-```
+```bash
     >>> arr=[1,2,3,404]
     >>> arr.remove(404)
     >>> arr
@@ -46,14 +46,14 @@ After 3 years of experience in python revisioning core fundamentals of Python
 
 #### List comprehension
 List Comprehension is a concise and efficient way to create list in Python using some expression.
-```
+```bash
     >>> [ x*x for x in range(1,6) ] 
     [1, 4, 9, 16, 25]
 ```
 
 ## Dictionary in Python
 
-```
+```bash
     >>> chai={"masala":"spicy", "ginger":"zesty", "green":"mild"}
     >>> chai
     {'masala': 'spicy', 'ginger': 'zesty', 'green': 'mild'}
@@ -73,7 +73,7 @@ List Comprehension is a concise and efficient way to create list in Python using
 #### x in dict [ TC: O(1) ]     x in dict.values() [ TC: O(n)]
 
 #### Pop in dict
-```
+```bash
     >>> chai.pop("ginger")
     'zesty'
     >>> chai
@@ -81,7 +81,7 @@ List Comprehension is a concise and efficient way to create list in Python using
 ```
 
 #### Pop last entry of dict & delete operation
-```
+```bash
     >>> chai["new"] = "Black Tea"
     >>> chai
     {'masala': 'spicy', 'green': 'Fresh', 'new': 'Black Tea'}
@@ -94,7 +94,7 @@ List Comprehension is a concise and efficient way to create list in Python using
     {'masala': 'spicy'}
 ```
 #### Mutable
-```
+```bash
     >>> hmap={
     ... "chai":chai,
     ... "name":"Tamal Mallick"
@@ -110,7 +110,7 @@ List Comprehension is a concise and efficient way to create list in Python using
     {'chai': {'masala': 'spicy', 'green': 'mild'}, 'name': 'Tamal Mallick'}
 ```
 #### Dictionary Comprehension
-```
+```bash
     >>> square={x:x*x for x in range(1,5)}
     >>> square
     {1: 1, 2: 4, 3: 9, 4: 16}
@@ -119,7 +119,7 @@ List Comprehension is a concise and efficient way to create list in Python using
     {}
 ```
 #### Creating new dict
-```
+```bash
     >>> keys=["green","red","masala"]
     >>> default_value= "tea"
     >>> new_dict= dict.fromkeys(keys, default_value)
@@ -133,7 +133,7 @@ List Comprehension is a concise and efficient way to create list in Python using
 ## Tuple in Python
 
 #### Immutable but supports all other operations like list()
-```
+```bash
     >>> t=(1,2,3,1,2,3,1,1)
     >>> t.count(1)
     4
@@ -145,8 +145,11 @@ Optimization happens at multiple levels:
 Python < C < OS < CPU
 
     - Python: Interpreted, high-level, more overhead.
+
     - C: Lower-level, compiled, optimized memory handling.
+
     - OS: Manages processes, scheduling, memory paging.
+
     - CPU: Hardware-level optimizations, caching, parallel execution.
 
 Each layer adds efficiency, with CPU-level optimizations being the fastest! 🚀
@@ -155,12 +158,17 @@ Each layer adds efficiency, with CPU-level optimizations being the fastest! 🚀
 
 #### Iterator and Iterable
     - Calling iter(arr) returns an iterator object for the iterable ( x= iter([1,2,3,4]) & got x= <list_iterator object at 0x00000250EB95DCF0> ).
+
     - Iterator Object's memory reference stays the same between iterations.
+
     - Calling x.__next__() returns the current value and then __next__() moves to the next item ( returns 1 and moves to next element 2).
+
     - What changes: The internal position of the iterator (x.__next__() moves to the next item like from 1 to 2).
+
     - What does not change: The memory reference of the iterator object ,even after x.__next__() is called. (Remains x= <list_iterator object at 0x00000250EB95DCF0>).
+
     - StopIteration: When the iterator is exhausted, x.__next__() raises the StopIteration exception to signal the end of iteration and the for loop stops.
-```
+```bash
     >>> arr=[1,2,3,4]
     >>> x=iter(arr)
     >>> x
@@ -185,7 +193,7 @@ Each layer adds efficiency, with CPU-level optimizations being the fastest! 🚀
 ```
 #### Reference of file is by default it's Iterable Object
 #### Reference of List/ Dictionary is not it's Iterable Object by default 
-```
+```bash
     >>> f= open('chai.py')
     >>> f is iter(f)
     True                    # Reference of Iterable of file object
@@ -212,15 +220,7 @@ Each layer adds efficiency, with CPU-level optimizations being the fastest! 🚀
 - Default Parameter value
 - Lambda function
 - Function with *args : Takes n number of arguments as tuple
-```
-def sum_all(*args):
-    print(args, type(args))
-    list(map(lambda x: print(f"Cube of {x} is {x**3}"), args))
-    return f"Sum = {sum(args)}"
-print(sum_all(1,2,4))
-
-OUTPUT:
-# * args
+```python
 def sum_all(*args):
     print(args, type(args))
 
@@ -229,18 +229,29 @@ def sum_all(*args):
     # So, list(map(...)) is used to force execution by iterating over it.
 
     return f"Sum = {sum(args)}"
+
 print(sum_all(1,2,4))
+```
+OUTPUT:
+```bash
+(1, 2, 4) <class 'tuple'>
+Cube of 1 is 1
+Cube of 2 is 8
+Cube of 4 is 64
+Sum = 7
 ```
 
 - Function with **kwargs : Takes n number of keyword arguments as a dictionary.
-```
+```python
 def print_kwargs(**kwargs):
     print(kwargs, type(kwargs))
     for key , value in kwargs.items():
         print(key," : ",value)
-print_kwargs(power="Laddu", name="Chota Bhem", enemy="Kaliya")
 
+print_kwargs(power="Laddu", name="Chota Bhem", enemy="Kaliya")
+```
 OUTPUT:
+```bash
 {'power': 'Laddu', 'name': 'Chota Bhem', 'enemy': 'Kaliya'} <class 'dict'>
 power  :  Laddu
 name  :  Chota Bhem
@@ -248,14 +259,17 @@ enemy  :  Kaliya
 ```
 
 - Generator  Function with yield : Returns values on demand using yield, without storing them all in memory.
-```
+```python
 def even_generator(limit):
     for i in range(2, limit+1, 2):
         yield i
-print(type(even_generator(8)))
-for num in even_generator(8):print(num, "\tGenerated")
 
+print(type(even_generator(8)))
+
+for num in even_generator(8):print(num, "\tGenerated")
+```
 OUTPUT:
+```bash
 <class 'generator'>
 2 	Generated
 4 	Generated
@@ -264,15 +278,17 @@ OUTPUT:
 ```
 
 - Recursive Function : Recursion is a technique where a function calls itself to solve a problem by breaking it into smaller subproblems until a base case is reached.
-```
+```python
 def factorial(n):
     print(f"Input : {n}")
     if n<2:
         return 1
     return n* factorial(n-1)
+    
 factorial(4)
-
+```
 OUTPUT:
+```bash
 Input : 5
 Input : 4
 Input : 3
