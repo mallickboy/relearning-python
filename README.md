@@ -202,3 +202,113 @@ Each layer adds efficiency, with CPU-level optimizations being the fastest! 🚀
     >>> next(z)
     1
 ```
+
+# Function in Python
+
+#### Topics
+- Basic Function Syntax
+- Functionwith multiple Parameters
+- Polymorphism in Function : 2 *3= 6, "a"*3= "aaa"
+- Default Parameter value
+- Lambda function
+- Function with *args : Takes n number of arguments as tuple
+```
+def sum_all(*args):
+    print(args, type(args))
+    list(map(lambda x: print(f"Cube of {x} is {x**3}"), args))
+    return f"Sum = {sum(args)}"
+print(sum_all(1,2,4))
+
+OUTPUT:
+# * args
+def sum_all(*args):
+    print(args, type(args))
+
+    # map(... ) returns a lazy iterator that does not execute immediately
+    list(map(lambda x: print(f"Cube of {x} is {x**3}"), args))
+    # So, list(map(...)) is used to force execution by iterating over it.
+
+    return f"Sum = {sum(args)}"
+print(sum_all(1,2,4))
+```
+
+- Function with **kwargs : Takes n number of keyword arguments as a dictionary.
+```
+def print_kwargs(**kwargs):
+    print(kwargs, type(kwargs))
+    for key , value in kwargs.items():
+        print(key," : ",value)
+print_kwargs(power="Laddu", name="Chota Bhem", enemy="Kaliya")
+
+OUTPUT:
+{'power': 'Laddu', 'name': 'Chota Bhem', 'enemy': 'Kaliya'} <class 'dict'>
+power  :  Laddu
+name  :  Chota Bhem
+enemy  :  Kaliya
+```
+
+- Generator  Function with yield : Returns values on demand using yield, without storing them all in memory.
+```
+def even_generator(limit):
+    for i in range(2, limit+1, 2):
+        yield i
+print(type(even_generator(8)))
+for num in even_generator(8):print(num, "\tGenerated")
+
+OUTPUT:
+<class 'generator'>
+2 	Generated
+4 	Generated
+6 	Generated
+8 	Generated
+```
+
+- Recursive Function : Recursion is a technique where a function calls itself to solve a problem by breaking it into smaller subproblems until a base case is reached.
+```
+def factorial(n):
+    print(f"Input : {n}")
+    if n<2:
+        return 1
+    return n* factorial(n-1)
+factorial(4)
+
+OUTPUT:
+Input : 5
+Input : 4
+Input : 3
+Input : 2
+Input : 1
+
+120
+```
+
+### Highlights
+
+#### Parameter vs. Argument in Python Functions
+
+| Feature          | Parameter  | Argument  |
+|-----------------|------------|-----------|
+| **Definition**   | A variable in a function definition that acts as a placeholder for values. | The actual value passed to the function when it is called. |
+| **Where It Appears** | In the function definition (inside parentheses). | In the function call (inside parentheses). |
+| **Example**     | `def greet(name):` (`name` is a parameter) | `greet("Alice")` (`"Alice"` is an argument) |
+| **Role**        | Acts as a placeholder that receives a value. | Supplies an actual value to the function. 
+
+So in short, Parameters are variables in a function defination that act as placeholders for arguments passed during function call.
+
+#### Generators vs Regular Functions
+
+| Feature         | Generators (`yield`) | Regular Functions (`return`) |
+|---------------|--------------------|--------------------------|
+| **Memory Usage** | ✅ Memory-efficient (stores only the current value) | ❌ Uses more memory (stores all values at once) |
+| **Execution** | ✅ **Lazy execution** (produces values one by one) | ❌ **Eager execution** (computes everything immediately) |
+| **State Retention** | ✅ **Remembers where it left off** (resumes from `yield`) | ❌ **Does not retain state** (starts fresh each call) |
+| **Return Type** | ✅ Returns a **generator object** (an iterator) | ❌ Returns a **final computed value** |
+| **Use Case** | ✅ Ideal for **large datasets, streaming, infinite sequences** | ❌ Best for **small computations and immediate results** |
+| **Performance** | ✅ Efficient for iterating over large collections | ❌ Slower for large data (high memory usage) |
+
+### When to Use Generators?
+- ✅ Processing **large files** (reading line by line)
+- ✅ Streaming **real-time data** (logs, APIs)
+- ✅ Generating **infinite sequences** (Fibonacci, primes)
+
+So in short, A generator is a special function that returns an iterator and yields values one at a time, storing only the current state in memory for efficient execution.
