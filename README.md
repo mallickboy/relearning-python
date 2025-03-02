@@ -328,3 +328,110 @@ So in short, Parameters are variables in a function defination that act as place
 - ✅ Generating **infinite sequences** (Fibonacci, primes)
 
 So in short, A generator is a special function that returns an iterator and yields values one at a time, storing only the current state in memory for efficient execution.
+
+
+# Scopes and Closure in Python
+Python uses the LEGB rule (Local, Enclosing, Global, Built-in) to resolve variable names
+
+### Scope
+Scope is the area where a variable can be accessed or used in our code.
+
+``` python
+user= "Ram"
+
+def fun():
+    user = "Tamal"
+    def new():
+        user="mallickboy"
+    new()
+    print(user)
+
+fun()
+print(user)
+```
+OUTPUT:
+```bash
+Tamal
+Ram
+```
+
+#### Updating global variable using `golbal` keyword
+global tells Python to use and update the global variable's pointer instead of making a new local one.
+```python
+user= "Ram"
+
+def fun():
+    global user # It tells Python to refer to user variable in the global scope
+    user = "Tamal"
+    def new():
+        user="mallickboy"
+    new()
+    print(user)
+
+fun()
+print(user)
+```
+OUTPUT
+```bash
+Tamal
+Tamal
+```
+
+### Clousure
+Closure is when an inner function remembers and uses (depends on and has access to ) variables from its outer function even after the outer function has finished.
+
+#### ✅ Clousure: bagpack has values 
+```python
+def f1():
+    x= 88           # x is local to f1
+    def f2():
+        print(x)    # f2 uses x from the enclosing f1
+    return f2
+myf=f1()            # myf is now f2, with x=88 stored inside its closure
+print("Nested function : ")
+myf()
+print("Got clousure: ",myf.__closure__[0].cell_contents if myf.__closure__ else myf.__closure__)
+```
+OUTPUT:
+```bash
+Nested function : 
+88
+Got clousure:  88
+```
+
+#### ❌ Not Clousure: bagpack is empty
+```python
+def f1():
+    x= 88
+    print(x)
+    def f2():
+        print(10)
+    return f2
+myf=f1()
+print("Nested function : ")
+myf()
+print("Got clousure: ",myf.__closure__[0].cell_contents if myf.__closure__ else myf.__closure__)
+```
+OUTPUT:
+```bash
+88
+Nested function : 
+10
+Got clousure:  None
+```
+
+#### Working of `print()` 
+`print()` goes left to right, runs everything, turns them into text, and shows them concatenated in one line with spaces.
+
+```python
+def funct():
+    print("Executed")
+    return 200
+print("Func:\n",funct())
+```
+OUTPUT:
+```bash
+Executed
+Func:
+ 200
+ ```
