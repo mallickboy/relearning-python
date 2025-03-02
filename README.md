@@ -330,7 +330,7 @@ So in short, Parameters are variables in a function defination that act as place
 So in short, A generator is a special function that returns an iterator and yields values one at a time, storing only the current state in memory for efficient execution.
 
 
-# Scopes and Closure in Python
+# Scopes , Global and Closure in Python
 Python uses the LEGB rule (Local, Enclosing, Global, Built-in) to resolve variable names
 
 ### Scope
@@ -355,16 +355,16 @@ Tamal
 Ram
 ```
 
-#### Updating global variable using `golbal` keyword
+### `global` keyword
 global tells Python to use and update the global variable's pointer instead of making a new local one.
 ```python
 user= "Ram"
 
 def fun():
-    global user # It tells Python to refer to user variable in the global scope
+    global user  # Refers to the global 'user' variable
     user = "Tamal"
     def new():
-        user="mallickboy"
+        user="mallickboy"   # Local to 'new', does NOT affect the global 'user'
     new()
     print(user)
 
@@ -375,6 +375,43 @@ OUTPUT
 ```bash
 Tamal
 Tamal
+```
+
+#### `global` can create a variable in the global namespace (module-level memory scope) of Python.
+
+```python
+def myfun():
+    global x
+    x = 100  # No global x existed before, now created
+myfun()
+print(x)
+```
+OUTPUT:
+```bash
+100
+```
+
+#### `global` directly refers to global variable's reference
+`globl` keword tell to refer variable reference of global memory scope , it doesn't perform that LEGB rule. So parent may have different same variable with different reference and values
+
+```python
+var= "I am from Global Scope"
+def myfun():
+    var="I am from local of myfun Scope"  # Has different reference than the global `var` 
+    def nested():
+        global var  # Refers to the global `var`, not the local one
+        var="I am from local of myfun.nested Scope"
+    print(var)  # (1) Before nested() call → local `var` of `myfun`
+    nested()    # This updates the global `var`
+    print(var)  # (2) After nested() call → still local `var` of `myfun`
+myfun()
+print(var)      # (3) Global `var`, which was updated in nested()
+```
+OUTPUT:
+```bash
+I am from local of myfun Scope
+I am from local of myfun Scope
+I am from local of myfun.nested Scope
 ```
 
 ### Clousure
@@ -420,7 +457,7 @@ Nested function :
 Got clousure:  None
 ```
 
-#### Working of `print()` 
+### Working of `print()` 
 `print()` goes left to right, runs everything, turns them into text, and shows them concatenated in one line with spaces.
 
 ```python
