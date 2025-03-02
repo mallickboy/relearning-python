@@ -355,7 +355,7 @@ Tamal
 Ram
 ```
 
-### `global` keyword
+### Global
 global tells Python to use and update the global variable's pointer instead of making a new local one.
 ```python
 user= "Ram"
