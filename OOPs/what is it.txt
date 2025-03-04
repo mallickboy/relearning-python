@@ -1,0 +1,15 @@
+OOP (Object-Oriented Programming) is like creating a metal casting mold. We create a class using Python, C++, Java, or other languages. In this class, we define the structure and control which parts of the code will shape specific portions of the final object or use case.
+
+Just like we create a base doll body by pouring mud into the casting mold, we create an object by taking a memory image of the class. This object holds all the properties and behaviors imposed by the class. We store a reference to this object using a variable, which allows us to access the functionalities of the class through the object.
+
+Now, just like after creating the base body of the doll from the mold, we add hair to the head, color the body, dress it, apply makeup, and prepare it as a new item for the shop, we customize our objects. We provide parameters, call different methods on the objects as needed, and modify them to get the desired results. We can even combine multiple such class objects to create more advanced features in our product.
+
+And that's OOP—an independent, self-sufficient, shippable code module that can be reused and combined as needed.
+
+
+SUMMERY:
+
+
+OOP is like creating a metal casting mold—the class is the mold, designed with code (Python, C++, Java) to define structure and features. When we create an object, it's like making a doll from the mold—allocating memory, applying the class design, and getting a fully shaped base.
+We then customize the doll—adding hair, paint, clothes—similar to calling methods on the object with specific parameters. Each object becomes a unique, independent, self-sufficient product, ready to be shipped or combined into larger systems.
+OOP helps us build reusable, modular, and organized code—just like a factory producing various custom dolls from the same reliable mold.

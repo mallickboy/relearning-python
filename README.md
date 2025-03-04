@@ -472,3 +472,497 @@ Executed
 Func:
  200
  ```
+
+
+ # Object Oriented Programming (OOPs) in Python
+
+### Idea
+OOP is like creating a metal casting mold—the class is the mold, designed with code (Python, C++, Java) to define structure and features. When we create an object, it's like making a doll from the mold—allocating memory, applying the class design, and getting a fully shaped base.
+We then customize the doll—adding hair, paint, clothes—similar to calling methods on the object with specific parameters. Each object becomes a unique, independent, self-sufficient product, ready to be shipped or combined into larger systems.
+OOP helps us build reusable, modular, and organized code—just like a factory producing various custom dolls from the same reliable mold.
+
+```Python
+class MetalMold:
+    def __init__(self, name="a Doll"):
+        self.doll = f"I am {name}."
+
+    def add_hair(self, color="Black"):      #  Adds hair color to the doll
+        self.doll += f" I have {color} hair."
+
+    def add_costume(self, costume_name):            # Adds a costume to the doll.
+        self.doll += f" I have a {costume_name} costume."
+
+    def add_decorations(self, items):       # Adds accessories or decorations to the doll.
+        self.doll += f" I have {', '.join(items)}."
+
+    def know_about_me(self):                # Returns the doll's final description.
+        return self.doll
+
+# Creating objects / base body
+doll_1, doll_2 = MetalMold("Cinderella"), MetalMold("Rosey")
+
+# Now decorating using methods
+doll_1.add_hair(color="Blond")  
+doll_1.add_costume(costume_name="Annabelle")  
+
+doll_2.add_hair()  
+doll_2.add_costume(costume_name="Chucky")  
+doll_2.add_decorations(items=["Purse", "Hat", "Chain"])  
+
+# Displaying final details
+print("Doll 1:\n", doll_1.know_about_me())  
+print("Doll 2:\n", doll_2.know_about_me())  
+```
+
+OUTPUT:
+```bash
+Doll 1:
+ I am Cinderella. I have Blond hair. I have a Annabelle costume.
+Doll 2:
+ I am Rosey. I have Black hair. I have a Chucky costume. I have Purse, Hat, Chain.
+```
+### Topics
+### 1. Basic Class and Object
+TAsk: Create a Car class with attributes brand and model. Then create an instance of that class.
+
+- Attributes : Variables (brand, model)
+- Instance : A4 copy of pdf form or a doll of a doll mold. A memory image of that class.
+
+```python
+class Car:
+    def __init__(self, brand, model)->None:     # Automatically called at begining
+        self.brand= brand   # Attributes     
+        self.model= model
+
+my_car=Car("Toyota", "Corolla")        # instance of class (object 1) : usable memory image of class Car
+print(my_car.brand, my_car.model)
+
+new_car=Car("Tata", "Safari")          # object 2
+print(new_car.brand, new_car.model) 
+```
+
+OUTPUT:
+```bash
+Toyota Corolla
+Tata Safari
+```
+
+### 2. Class Method and self
+Task: Add method to the class to display full name.
+
+- self works as a connection line to reach different componentsof the class. Like using Telephone line to call them.
+
+```python
+class Car:
+    def __init__(self, brand, model)->None:
+        self.brand= brand   # Attributes     
+        self.model= model
+
+    def full_name(self):    # self works as a connection line to reach different componentsof the class.
+        return f"Full Name : {self.brand} {self.model}"
+my_car=Car("Toyota", "Corolla")        # instance of class (object 1) : usable memory image of class Car
+print(my_car.full_name())
+
+new_car=Car("Tata", "Safari")          # object 2
+print(new_car.full_name())
+```
+
+OUTPUT:
+```code
+Full Name : Toyota Corolla
+Full Name : Tata Safari
+```
+
+### 3. Inheritance
+Task: Create an Elecrtic car class that inherits from Car class and has additional attribute battery_size.
+
+```python
+class ElectricCar(Car):
+    def __init__(self, brand, model, battery_size):
+        # self.brand= brand                 # no need predefined
+        super().__init__(brand, model)      # Taking parental access
+        self.battery_size= battery_size
+tesla_car=ElectricCar("Tesla", "Model S", "85 kWh")
+print(tesla_car.brand, tesla_car.model, tesla_car.battery_size)
+print(tesla_car.full_name())
+```
+
+OUTPUT:
+```bash
+Tesla Model S 85 kWh
+Full Name : Tesla Model S
+```
+
+### 4. Encapsulation
+Restricting the direct access on class attributes. Only permitting some custom access though class methods.
+
+Task: Modify the Car class to encapsulate the brand attribute, making it private and provide a getter method for it.
+
+##### Not encapsulated
+```python
+class Car:
+    def __init__(self, brand, model):
+        self.model= model
+        self.brand= brand
+
+    def get_brand(self):
+        return self.brand + "!"
+    
+tesla_car=Car("Tesla", "Model S")
+print(tesla_car.brand, tesla_car.model)
+tesla_car.brand= "Tata"     # Overwritten outside of the class ,Open access --> Not secure
+print(tesla_car.get_brand())
+```
+
+OUTPUT:
+```bash
+Tesla Model S
+Tata!
+```
+
+##### After encapsulation
+```python
+class Car:
+    def __init__(self, brand, model):
+        self.model= model
+        self.__brand= brand     # private class attribute
+
+    def get_brand(self):        # custom access on private attributes
+        return self.__brand + "!"
+    
+tesla_car=Car("Tesla", "Model S")
+print(tesla_car.get_brand())
+```
+
+OUTPUT:
+```bash
+Tesla!
+```
+##### Try to edit
+```python
+tesla_car=Car("Tesla", "Model S")
+tesla_car.__brand= "Tata Motors"
+print(tesla_car.get_brand())
+```
+
+OUTPUT:
+```bash
+Tesla!
+```
+
+##### Try to read directly
+
+```python
+tesla_car=Car("Tesla", "Model S")
+print(tesla_car.get_brand())
+print(tesla_car.__brand)
+```
+OUTPUT:
+```bash
+Tesla!
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[79], line 11
+      9 tesla_car=Car("Tesla", "Model S")
+     10 print(tesla_car.get_brand())
+---> 11 print(tesla_car.__brand)
+
+AttributeError: 'Car' object has no attribute '__brand'
+```
+
+##### Try to write first then read private attributes
+```python
+tesla_car=Car("Tesla", "Model S")
+print(tesla_car.get_brand())           # Output: Tesla!
+
+tesla_car.__brand= "Tata Motors"       # This does NOT overwrite the private __brand instaed creates new one. also if not created raed attemp gives error
+print(tesla_car.__brand)               # Output: Tata Motors (new attribute created)
+
+print(tesla_car.get_brand())           # Output: Tesla!
+
+print("All instances of this Object:",tesla_car.__dict__)       # all the instance attributes of an object
+```
+
+OUTPUT:
+```bash
+Tesla!
+Tata Motors
+Tesla!
+All instances of this Object: {'model': 'Model S', '_Car__brand': 'Tesla', '__brand': 'Tata Motors'}
+```
+
+Hence created new instance `__brand` for external use, the original `__barnd` is donoted by `_Car__brand` : `_<class name><private attribute>` . Private attribute starts with `self.__<attribute name>`.
+
+We can still use `__brand` freely inside the class.
+
+### 5. Polymorphism
+Taking different forms like BahuRupi. Water --> Vapour --> Ice
+Example : standard `+` of python as it adds strings as well as numbers.
+
+```python
+class Car:
+    def __init__(self, brand, model):
+        self.model= model
+        self.__brand= brand     # private class attribute
+
+    def get_brand(self):        # custom access on private attributes
+        return self.__brand + "!"
+    def fuel_type(self):
+        return "Petrol or Diesel"
+
+class ElectricCar(Car):
+    def __init__(self, brand, model, battery_size):
+        super().__init__(brand, model)
+        self.battery_size= battery_size
+    def fuel_type(self):        # Also overwrites the method of parent, Car class
+        return "Etectricity"
+
+tesla_car=ElectricCar("Tesla", "Model S", "85 kWh")
+print(tesla_car.model, tesla_car.fuel_type())
+
+safari_car=Car("Tata Motors", "Safari")
+print(safari_car.model, safari_car.fuel_type())
+```
+
+OUTPUT:
+```bash
+Model S Etectricity
+Safari Petrol or Diesel
+```
+
+### 6. Class Variables
+Task: Add a class variable to Car that keeps tarck of the number of car created.
+
+```python
+# Task: Add a class variable to Car that keeps tarck of the number of car created.
+class Car:
+    total_car=0
+    def __init__(self, brand, model):
+        self.model= model
+        self.__brand= brand     # private class attribute
+        Car.total_car += 1      # class variable
+        # self.total_car += 1   # Alternate
+
+    def get_brand(self):        # custom access on private attributes
+        return self.__brand + "!"
+    
+    def fuel_type(self):
+        return "Petrol or Diesel"
+    
+x=Car("Tata Motors", "Jaguar")
+Car("Tata Motors", "Safari")
+Car("Tata Motors", "Nano")
+Car("Tata Motors", "Sumo")
+
+print(Car.total_car, x.total_car)
+```
+
+OUTPUT:
+```bash
+4 4
+```
+
+### 7. Static Method
+A method that belongs to the class itself, not to any specific instance of the class (object).
+
+```python
+class Car:
+    total_car=0
+    def __init__(self, brand, model):
+        self.model= model
+        self.__brand= brand     # private class attribute
+        Car.total_car += 1      # class variable
+        # self.total_car += 1   # Alternate
+    
+    def fuel_type(self):
+        return "Petrol or Diesel"
+    
+    def general_description(self):
+        return "Cars are means of transportation."
+    
+my_car=Car("Tata Motors", "Jaguar")
+
+print(my_car.general_description())
+print(Car.general_description())
+```
+
+OUTPUT:
+```bash
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[32], line 19
+     16 my_car=Car("Tata Motors", "Jaguar")
+     18 print(my_car.general_description())
+---> 19 print(Car.general_description())
+
+TypeError: Car.general_description() missing 1 required positional argument: 'self'
+```
+
+```python
+class Car:
+    total_car=0
+    def __init__(self, brand, model):
+        self.model= model
+        self.__brand= brand     # private class attribute
+        Car.total_car += 1      # class variable
+        # self.total_car += 1   # Alternate
+    
+    def fuel_type(self):
+        return "Petrol or Diesel"
+    @staticmethod
+    def general_description():
+        return "Cars are means of transportation."
+    
+my_car=Car("Tata Motors", "Jaguar")
+
+print(Car.general_description())
+print(my_car.general_description())
+```
+
+OUTPUT:
+```bash
+Cars are means of transportation.
+Cars are means of transportation.
+```
+So, Imagine a school (class) that has a notice board (static method).
+The notice board belongs to the school, not any individual student (object).
+
+However, any student who walks by can still read the notice — but that doesn’t mean the notice belongs to them.
+
+##### For Python :
+- Static methods belong to the class.
+- Python's design says: "Hey, for convenience, I'll let objects access their class-level tools too."
+
+### 8. Property Decorators
+Task: Use the Property Decorator in yhe Car class to make the model attribute read-only.
+
+The @property decorator allows controlled, read-only access to private attributes using simple attribute-like syntax without direct modification from outside the class.
+
+##### Why ?
+```python
+class Car:
+    total_car=0
+    def __init__(self, brand, model):
+        self.__model= model
+        self.__brand= brand     # private class attribute
+        Car.total_car += 1      # class variable
+
+    def model(self):
+        return self.__model
+    
+my_car=Car("Tata Motors", "Jaguar")
+
+print(my_car.__dict__)
+my_car.model= "Safari"
+
+print(my_car.__dict__)
+print(my_car.model())
+```
+
+OUTPUT:
+```bash
+{'_Car__model': 'Jaguar', '_Car__brand': 'Tata Motors'}
+{'_Car__model': 'Jaguar', '_Car__brand': 'Tata Motors', 'model': 'Safari'}
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[21], line 18
+     15 my_car.model= "Safari"
+     17 print(my_car.__dict__)
+---> 18 print(my_car.model())
+
+TypeError: 'str' object is not callable
+```
+As __model is now private so model craetes a new attribute for oject stroing model ="Safari" so it got overwritten to str an no more a method of class.
+
+##### Fix 
+@property decorator makes sure to to keep that method name unique and prevent accidental variable declearation useing exact same attribute name.
+```python
+class Car:
+    total_car=0
+    def __init__(self, brand, model):
+        self.__model= model
+        self.__brand= brand     # private class attribute
+        Car.total_car += 1      # class variable
+
+    @property       # Hiding, access through method | Read-only
+    def model(self):
+        return self.__model
+    def ch(self):
+        self.__model="xyz"
+    
+my_car=Car("Tata Motors", "Jaguar")
+
+print(my_car.__dict__)
+print(my_car.__dict__)
+print(my_car.model)
+my_car.model= "Safari"      # Unable to overwrite
+```
+
+OUTPUT:
+```bash
+{'_Car__model': 'Jaguar', '_Car__brand': 'Tata Motors'}
+{'_Car__model': 'Jaguar', '_Car__brand': 'Tata Motors'}
+Jaguar
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[32], line 19
+     17 print(my_car.__dict__)
+     18 print(my_car.model)
+---> 19 my_car.model= "Safari"
+
+AttributeError: property 'model' of 'Car' object has no setter
+```
+
+### 9. Class Inheritance and isinstance() Function
+Task: Demonstrate the use of isinstance() to check if `tesla_car` is an instance of Car and ElectricCar.
+
+```python
+tesla_car=ElectricCar("Tesla", "Model S", "85 kWh")
+
+print(isinstance(tesla_car, Car))
+
+print(isinstance(tesla_car, ElectricCar))
+```
+
+OUTPUT:
+```bash
+True
+True
+```
+
+### 10. Multiple Inheritance
+Task: Craete 2 class Battery and Engine, and let the ElectricCar class inherit from both.
+
+```python
+class Car:
+    def __init__(self, brand, model):
+        self.model= model
+        self.__brand= brand     # private class attribute
+
+class Battery:
+    battery="I have 85 kWh Battery."
+
+class Engine:
+    engine="I have X41 Brushless motors."
+
+class ElectricCar(Battery, Engine, Car):
+    def __init__(self, brand, model, battery_size):
+        super().__init__(brand, model)
+        self.battery_size= battery_size
+    def fuel_type(self):
+        return "Etectricity"
+
+tesla_car=ElectricCar("Tesla", "Model S", "85 kWh")
+
+print(tesla_car.__dict__)       # only contains instance-level attributes
+print(tesla_car.battery, tesla_car.engine)
+```
+
+OUTPUT:
+```bash
+{'model': 'Model S', '_Car__brand': 'Tesla', 'battery_size': '85 kWh'}
+I have 85 kWh Battery. I have X41 Brushless motors.
+```
+
+- Python supports multiple inheritance.
+- The `__dict__` of an object (`tesla_car.__dict__`) only contains instance-level attributes, which are the attributes directly defined in the object itself via self. in the `__init__()` method or elsewhere.
