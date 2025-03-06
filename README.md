@@ -1130,3 +1130,70 @@ When we call function `B()` within another function `A()`
 At runtime, when `A` executes and reaches `B()`, Python locates `B`'s object, runs it, and then returns control back to `A`.
 
 ### PENDING: Decorator with parameters `@decorator(show= True)`
+
+
+# Others
+
+### Python API request Handeling
+We use request library to handle API request in python
+
+```python
+import requests
+
+r= requests.get("https://api.freeapi.app/api/v1/public/randomusers/user/random")
+print(r.status_code)
+print(r.headers)
+print(r.encoding)
+print(r.text)
+print(r.json())
+type(r.text)
+```
+
+OUTPUT:
+```bash
+200
+{'Server': 'nginx/1.18.0 (Ubuntu)', 'Date': 'Thu, 06 Mar 2025 19:41:23 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '1123', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'RateLimit-Limit': '5000', 'RateLimit-Remaining': '4977', 'RateLimit-Reset': '244', 'ETag': 'W/"463-FpvT2CVnFdGYijQU4URrxJGbJPU"', 'Set-Cookie': 'connect.sid=s%3AAwc9UaPWT17QokOT_G1pGEILplycpXPN.UUcuK9D2bp07wc2VeRWFipq97p2hZMFOuUuvfFM%2B16I; Path=/; HttpOnly'}
+utf-8
+{'statusCode': 200, 'data': {'gender': 'female', ... }'success': True}
+{'statusCode': 200, 'data': {'gender': 'female', ... }'success': True}
+```
+
+```python
+import requests
+from mylib.runtime import runtime
+
+@runtime            # my personal library containing decorator to evaluate performence
+def fetch_random_user():
+    url= "https://api.freeapi.app/api/v1/public/randomusers/user/random"
+    response= requests.get(url)
+    data= response.json()
+    if data["success"] and "data" in data:
+        user_data= data["data"]
+        user_name= user_data["login"]["username"]
+        user_country= user_data["location"]["country"]
+        return user_name, user_country
+    else:
+        raise Exception("Failed to fetch user data")
+# fetch_random_user()
+
+def main():
+    try:
+        user_name, user_country= fetch_random_user()
+        print(f"\nUsername: {user_name}, Country: {user_country}")
+    except Exception as e:
+        print(str(e))
+
+if __name__=="__main__":
+    main()
+```
+
+OUTPUT:
+```bash
+Runtime Report for 'fetch_random_user':
+- Memory Used During Execution : 0.04 MB
+- Memory Currently Occupied    : 0.005 MB
+- Memory Freed After Execution : 0.036 MB
+- Time Required for Execution  : 332.993 ms
+
+Username: smallkoala605, Country: Mexico
+```
