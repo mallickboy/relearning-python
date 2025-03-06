@@ -1128,3 +1128,5 @@ When we call function `B()` within another function `A()`
 - `B`'s full code (object) stays separate in memory — nothing is "injected" into `A`'s object.
 
 At runtime, when `A` executes and reaches `B()`, Python locates `B`'s object, runs it, and then returns control back to `A`.
+
+### PENDING: Decorator with parameters `@decorator(show= True)`
