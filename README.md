@@ -966,3 +966,165 @@ I have 85 kWh Battery. I have X41 Brushless motors.
 
 - Python supports multiple inheritance.
 - The `__dict__` of an object (`tesla_car.__dict__`) only contains instance-level attributes, which are the attributes directly defined in the object itself via self. in the `__init__()` method or elsewhere.
+
+
+# Decorators
+A decorator is a function that wraps another function to modify or extend its behavior without changing its actual code.
+
+- Decorators take a function as input, wrap it inside another function (called a wrapper), add extra behavior before or after the original function runs, and then return this new wrapped function to replace the original. 
+
+- From that point onward, whenever we call the original function, we’re actually calling and executing the wrapper, which contains both the original logic and the added functionalities provided by the decorator.
+
+- Decorators replace the original function's reference with a new wrapped object in memory, so every future call executes the wrapper, not the original function directly.
+
+### 1. Timing Function Execution
+```python
+import time
+
+def runtime(fun):
+    def wrapper(*args, **kwargs):
+        start= time.time()
+        res= fun(*args, **kwargs)
+        print(f"Function `{fun.__name__}` executed in ",time.time()-start)
+        return res
+    return wrapper
+
+@runtime
+def example_function(n):
+    print("Hellow")
+    time.sleep(n)
+
+example_function(1)
+```
+
+OUTPUT:
+```bash
+Hellow
+Function `example_function` executed in  1.0008952617645264
+```
+
+### 2. Debugging Function Call
+Create a decorator to print the function name and values of its arguments every time function is called.
+```python
+def debug(function):
+    def wrapper(*args, **kwargs):
+        args_values= ', '.join(str(arg) for arg in args)
+        kwargs_values= ', '.join(f"{key}: {value}" for key, value in kwargs.items())
+        print(f"Callibg `{function.__name__}` with args: `{args_values}` and kwargs: `{kwargs_values}`")
+        res= function(*args, **kwargs)
+        return res
+    return wrapper
+
+def helo():
+    print("Hellow!")
+
+@debug
+def greet(name, greeting="Hellow!"):
+    print(f"{greeting} {name}")
+    
+greet("Tamal", greeting="Yoo")
+```
+
+OUTPUT:
+```bash
+Callibg `greet` with args: `Tamal` and kwargs: `greeting: Yoo`
+Yoo Tamal
+```
+
+### 3. Cache Return Values
+Implement a decorator that caches the return values of a function, so that when it called with same arguments again, the cached value is returned instead of reexecuting the function.
+
+```python
+import time
+
+def cache(function):
+    cached_value= {}                    # O(1) access time 
+    print("cached values: ",cached_value)
+    def wrapper(*args, **kwargs):
+        print("cached growth: ",cached_value)
+        if args in cached_value:
+            return cached_value[args]
+        res= function(*args, **kwargs)
+        cached_value[args]= res         # caching the args: result
+
+        return res
+    return wrapper
+
+@cache
+def long_running_function(a, b):
+    time.sleep(2)                       # let it performing database calls
+    return a+ b   
+
+```
+
+OUTPUT:
+```bash
+cached values:  {}
+```
+##### What happens at runtime:
+- Python runs the script top to bottom.
+- It sees `@cache` on `long_running_function`.
+- It executes `cache(long_running_function)` and prints `"cached values: {}"`.
+- The returned wrapper function replaces `long_running_function`.
+- Now every time we call `long_running_function()`, we are actually calling `wrapper()`, which uses the same `cached_value`.
+
+```python
+print(long_running_function(2,3))
+print(long_running_function(3,3))
+print(long_running_function(2,3))
+```
+
+OUTPUT:
+```bash
+cached growth:  {}
+5
+cached growth:  {(2, 3): 5}
+6
+cached growth:  {(2, 3): 5, (3, 3): 6}
+5
+```
+
+### ✅ Function From Memory Perspective
+A function name (like fun) is just a reference (label) to a function object stored in memory, which holds the actual definition — all the code we wrote inside (like if-else, loops, arrays, etc.).
+
+When we call the function (fun()), Python uses that reference to locate the function object, passes the argument objects to it, executes the code, and finally returns the result to the caller (for example, in x = fun(1, 2), the caller is the line of code x = fun(1, 2), and x stores the returned result).
+
+### ✅ Decorators Effect on Functions From Memory Perspective
+
+As Python executes code from top to bottom, when the interpreter finds a `@decorator`, it takes the original function object from memory, passes it into the decorator, which wraps it inside a new function object (the wrapper) that adds extra behavior.
+
+This new wrapper function is created as a **separate object in memory**, and Python updates the original function's name reference to now point to this new wrapper object (overwriting the old reference).
+
+So, from that moment onward, whenever we call the original function name, we are actually triggering the new wrapper function object in memory — which runs both the original logic and the added decorator logic.
+
+This reference swap happens only once, during decoration, meaning the function name now permanently points to the modified, enhanced version until changed again.
+
+```python
+def decorator(function):
+    print(f"Original Function Object in Memory:\t {function}")
+    def wrapper():
+        return function()
+    print(f"New Function Object in Memory:\t\t {wrapper}")
+    return wrapper
+
+@decorator
+def say_hi():
+    print("Hiiii Tamal !!!")
+
+print(f"Updated Function Object in Memory:\t {say_hi}")
+```
+
+OUTPUT:
+```bash
+Original Function Object in Memory:	 <function say_hi at 0x00000191E19C2700>
+New Function Object in Memory:		 <function decorator.<locals>.wrapper at 0x00000191E19C36A0>
+Updated Function Object in Memory:	 <function decorator.<locals>.wrapper at 0x00000191E19C36A0>
+```
+
+### ✅ Nested Function Call or Function Call Chaining
+When we call function `B()` within another function `A()`
+
+- `A` just holds a pointer (reference) to call `B` when needed.
+- `B`'s full code (object) stays separate in memory — nothing is "injected" into `A`'s object.
+
+At runtime, when `A` executes and reaches `B()`, Python locates `B`'s object, runs it, and then returns control back to `A`.
