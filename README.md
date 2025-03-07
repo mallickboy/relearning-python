@@ -5,6 +5,28 @@ After 3 years of experience in python revisioning core fundamentals of Python
 
 ## Internal Working ( 13th February 2025 )
 
+When we import a Python module, Python compiles it into bytecode and stores it in the `__pycache__` folder for faster execution in the future. However, if we modify the code of the imported module, Python will continue using the old version unless we explicitly reload the module.
+
+To apply the changes we’ve made to a module without restarting the Python runtime, we can use `importlib.reload()`. This allows us to dynamically apply updates during runtime.
+
+
+```python
+import a.b.my_module as lib
+
+lib.hellow("World")
+
+from importlib import reload
+reload(lib)     # reloading the imported module after making changes
+
+lib.hellow("World Reloaded")
+```
+
+OUTPUT:
+```bash
+Hellow World
+Hellow World Reloaded
+```
+
 #### Copy, Reference Coutn, Slice
 
 ## Numbers in Depth
