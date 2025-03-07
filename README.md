@@ -1207,3 +1207,17 @@ Username: smallkoala605, Country: Mexico
 - `%USERPROFILE%\AppData\Local\Microsoft\WindowsApps` -->
 - `pip freeze > requirements.txt`
 In `.gitignore` add *.venv to ignore virtual environment files.
+
+In Windows, for multiple Python versions, the py launcher keeps track of Python versions from **Registry Editor (Win + R -> regedit)** at `Computer\HKEY_CURRENT_USER\Software\Python\PythonCore\{ 3.1x /3.13 / 3.12 / 3.11 ... sub-folder}` and `Computer\HKEY_LOCAL_MACHINE\Software\Python\PythonCore\{ 3.1x /3.13 / 3.12 / 3.11 ... sub-folder}`. To validate any changes in destination paths, we should update the **User/System PATH** and assign the new path in the **Registry Editor** as well.  
+
+At this point, the existing pip within `Python31x\Scripts\` will have old paths, so we need to open CMD with Administrator privileges and run `py -3.1x -m pip install --upgrade --force-reinstall pip` for each modified version. Then validate.
+
+
+- py -0
+- where python
+- which python
+- python --version
+- py --version
+- where pip
+- which pip
+- pip --version
