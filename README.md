@@ -1197,3 +1197,13 @@ Runtime Report for 'fetch_random_user':
 
 Username: smallkoala605, Country: Mexico
 ```
+
+### Python Virtual Environment (.venv)
+
+- `pip install virtualenv`
+- `python -m venv .venv` or `py -3.11 -m venv .venv`
+- `Remove-Item -Recurse -Force .venv`
+<!-- - `C:\msys64\ucrt64\bin`
+- `%USERPROFILE%\AppData\Local\Microsoft\WindowsApps` -->
+- `pip freeze > requirements.txt`
+In `.gitignore` add *.venv to ignore virtual environment files.
