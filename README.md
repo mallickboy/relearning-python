@@ -1256,3 +1256,13 @@ We use **conda** or **Spyder** mainly for Data Science work. For production envi
 Jupyter Notebooks (`.ipynb`) are widely used in data science for exploratory coding, visualization, and documentation. While the full form of `.ipynb` is "Interactive Python Notebook," it is also used in other languages like R and Julia.
 
 Despite their advantages in data science, Jupyter Notebooks are not ideal for production use. They are relatively slow due to their JSON-based format for code and output. Furthermore, handling crashes and long-running processes in Jupyter Notebooks can be challenging. However, they remain popular for trial and error, prototyping, and building models, especially in data science.
+
+
+# Why Python? (Python vs JavaScript)
+
+Python has a wide range of libraries. Libraries such as **uv**, **Django**, and **FastAPI** make web development blazing fast. Like JavaScript, Python has its own positives. Using `UploadFile` from **FastAPI** and the **python-multipart** library, we can add file uploading functionality so easily to our backend just like JavaScript does with **multer**. 
+
+Additionally, Python is super powerful in **data science** and **machine learning**, but that doesn't hamper Python's strength in **web development**. Because of its enthusiastic open-source community and contributions from coders like us, today Python has stood out as a programming **GOD**.
+
+## Conclusion: The End of My Python Fundamentals Re-learning Journey
+With this, my re-learning of Python fundamentals officially comes to an end! Feel free to use the **README**, codes and my handwritten notes as you wish. 😊
