@@ -1,4 +1,4 @@
-# ReLearn Python
+<h1 align="center">ReLearn Python</h1>
 *After 3 years of hands-on experience in Python through various projects, including Linux/Server configuration exploration, web development, desktop app development, computer vision, machine learning, deep learning, real-time AR/VR, IoT, and more, I’m revisiting the core fundamentals of Python to strengthen the link between my practical experience and theoretical knowledge, ensuring a more robust understanding of the underlying principles.*
 
 
