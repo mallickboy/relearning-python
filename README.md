@@ -1,7 +1,12 @@
-# relearning-python
-After 3 years of experience in python revisioning core fundamentals of Python
+# ReLearn Python
+*After 3 years of hands-on experience in Python through various projects, including Linux/Server configuration exploration, web development, desktop app development, computer vision, machine learning, deep learning, real-time AR/VR, IoT, and more, I’m revisiting the core fundamentals of Python to strengthen the link between my practical experience and theoretical knowledge, ensuring a more robust understanding of the underlying principles.*
 
 
+Here are some notes; if useful, give a star ⭐ to this repo.
+
+1. [Hand-Written Notes ➡️](Hand-written-notes.pdf)
+
+2. README.md docs below ⬇️
 
 ## Internal Working ( 13th February 2025 )
 
